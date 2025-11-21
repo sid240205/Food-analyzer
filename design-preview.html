@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodTrack - Modern Design Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Navigation */
+        .nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 20px 32px;
+            margin-bottom: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            animation: slideDown 0.6s ease-out;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-link {
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            background: transparent;
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-link:not(.active) {
+            color: #64748b;
+        }
+
+        .nav-link:not(.active):hover {
+            background: #f1f5f9;
+            color: #334155;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.5);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1e293b;
+            border: 2px solid #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            border-color: #cbd5e1;
+            transform: translateY(-1px);
+        }
+
+        /* Hero Stats */
+        .hero {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 32px;
+            padding: 48px;
+            margin-bottom: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 0.6s ease-out 0.1s both;
+        }
+
+        .hero-amount {
+            font-size: 72px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            letter-spacing: -2px;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease-out both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:nth-child(1) { animation-delay: 0.2s; }
+        .stat-card:nth-child(2) { animation-delay: 0.3s; }
+        .stat-card:nth-child(3) { animation-delay: 0.4s; }
+        .stat-card:nth-child(4) { animation-delay: 0.5s; }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+        }
+
+        .stat-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .stat-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover .stat-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .stat-badge {
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-value {
+            font-size: 42px;
+            font-weight: 800;
+            color: #1e293b;
+            letter-spacing: -1px;
+        }
+
+        /* Charts Section */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .chart-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            animation: fadeInUp 0.6s ease-out 0.6s both;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .chart-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .chart-subtitle {
+            font-size: 14px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        .time-filters {
+            display: flex;
+            gap: 8px;
+            background: #f1f5f9;
+            padding: 4px;
+            border-radius: 12px;
+        }
+
+        .time-filter {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            background: transparent;
+            color: #64748b;
+        }
+
+        .time-filter.active {
+            background: white;
+            color: #1e293b;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .chart-placeholder {
+            height: 300px;
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            height: 200px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px 8px 0 0;
+            animation: growUp 1s ease-out both;
+            position: relative;
+        }
+
+        .chart-bar:nth-child(1) { height: 60%; animation-delay: 0.7s; }
+        .chart-bar:nth-child(2) { height: 85%; animation-delay: 0.8s; }
+        .chart-bar:nth-child(3) { height: 45%; animation-delay: 0.9s; }
+        .chart-bar:nth-child(4) { height: 95%; animation-delay: 1s; }
+        .chart-bar:nth-child(5) { height: 70%; animation-delay: 1.1s; }
+        .chart-bar:nth-child(6) { height: 55%; animation-delay: 1.2s; }
+
+        /* Donut Chart */
+        .donut-chart {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 24px;
+            position: relative;
+        }
+
+        .donut {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(
+                #667eea 0deg 120deg,
+                #764ba2 120deg 220deg,
+                #f59e0b 220deg 290deg,
+                #10b981 290deg 340deg,
+                #ec4899 340deg 360deg
+            );
+            animation: spin 2s ease-out;
+            position: relative;
+        }
+
+        .donut::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            height: 60%;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .legend {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .legend-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .legend-item:hover {
+            background: #f8fafc;
+        }
+
+        .legend-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .legend-name {
+            font-size: 14px;
+            color: #475569;
+            font-weight: 500;
+        }
+
+        .legend-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        /* Bottom Grid */
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .list-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            animation: fadeInUp 0.6s ease-out 0.7s both;
+        }
+
+        .list-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 24px;
+        }
+
+        .list-items {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            border-radius: 16px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .list-item:hover {
+            background: #f8fafc;
+            transform: translateX(4px);
+        }
+
+        .item-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .item-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .item-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .item-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .item-meta {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        .item-right {
+            text-align: right;
+        }
+
+        .item-amount {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .item-percentage {
+            font-size: 12px;
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        /* Animations */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes growUp {
+            from {
+                transform: scaleY(0);
+                transform-origin: bottom;
+            }
+            to {
+                transform: scaleY(1);
+                transform-origin: bottom;
+            }
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            .bottom-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                gap: 16px;
+            }
+            .hero-amount {
+                font-size: 48px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="nav">
+            <div class="logo">🍽️ FoodTrack</div>
+            <div class="nav-links">
+                <button class="nav-link active">Dashboard</button>
+                <button class="nav-link">Analytics</button>
+                <button class="nav-link">Orders</button>
+                <button class="nav-link">Settings</button>
+            </div>
+            <div class="nav-actions">
+                <button class="btn btn-secondary">Sync</button>
+                <button class="btn btn-primary">Export PDF</button>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <div class="hero">
+            <div class="hero-amount">₹45,280</div>
+            <div class="hero-subtitle">Total spent across 127 orders</div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #667eea20, #764ba220);">
+                        💰
+                    </div>
+                    <div class="stat-badge badge-success">+12%</div>
+                </div>
+                <div class="stat-label">Average Order</div>
+                <div class="stat-value">₹356</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #10b98120, #34d39920);">
+                        🍔
+                    </div>
+                    <div class="stat-badge badge-info">127</div>
+                </div>
+                <div class="stat-label">Total Orders</div>
+                <div class="stat-value">127</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b20, #fbbf2420);">
+                        🏪
+                    </div>
+                    <div class="stat-badge badge-warning">Top 5</div>
+                </div>
+                <div class="stat-label">Restaurants</div>
+                <div class="stat-value">23</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #ec489920, #f472b620);">
+                        💸
+                    </div>
+                    <div class="stat-badge badge-success">Saved</div>
+                </div>
+                <div class="stat-label">Discounts</div>
+                <div class="stat-value">₹3,240</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-grid">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <div>
+                        <div class="chart-title">Spending Overview</div>
+                        <div class="chart-subtitle">Your monthly food expenses</div>
+                    </div>
+                    <div class="time-filters">
+                        <button class="time-filter">Week</button>
+                        <button class="time-filter active">Month</button>
+                        <button class="time-filter">Year</button>
+                    </div>
+                </div>
+                <div class="chart-placeholder">
+                    <div class="chart-bars">
+                        <div class="chart-bar"></div>
+                        <div class="chart-bar"></div>
+                        <div class="chart-bar"></div>
+                        <div class="chart-bar"></div>
+                        <div class="chart-bar"></div>
+                        <div class="chart-bar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-header">
+                    <div>
+                        <div class="chart-title">Top Sources</div>
+                    </div>
+                </div>
+                <div class="donut-chart">
+                    <div class="donut"></div>
+                </div>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-label">
+                            <div class="legend-dot" style="background: #667eea;"></div>
+                            <div class="legend-name">KFC</div>
+                        </div>
+                        <div class="legend-value">₹12,450</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-label">
+                            <div class="legend-dot" style="background: #764ba2;"></div>
+                            <div class="legend-name">McDonald's</div>
+                        </div>
+                        <div class="legend-value">₹8,920</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-label">
+                            <div class="legend-dot" style="background: #f59e0b;"></div>
+                            <div class="legend-name">Domino's</div>
+                        </div>
+                        <div class="legend-value">₹6,340</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Grid -->
+        <div class="bottom-grid">
+            <div class="list-card">
+                <div class="list-title">Favorite Restaurants</div>
+                <div class="list-items">
+                    <div class="list-item">
+                        <div class="item-left">
+                            <div class="item-icon" style="background: linear-gradient(135deg, #667eea20, #764ba220);">
+                                🍗
+                            </div>
+                            <div class="item-info">
+                                <div class="item-name">KFC</div>
+                                <div class="item-meta">35 orders</div>
+                            </div>
+                        </div>
+                        <div class="item-right">
+                            <div class="item-amount">₹12,450</div>
+                            <div class="item-percentage">27.5%</div>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <div class="item-left">
+                            <div class="item-icon" style="background: linear-gradient(135deg, #10b98120, #34d39920);">
+                                🍔
+                            </div>
+                            <div class="item-info">
+                                <div class="item-name">McDonald's</div>
+                                <div class="item-meta">28 orders</div>
+                            </div>
+                        </div>
+                        <div class="item-right">
+                            <div class="item-amount">₹8,920</div>
+                            <div class="item-percentage">19.7%</div>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <div class="item-left">
+                            <div class="item-icon" style="background: linear-gradient(135deg, #f59e0b20, #fbbf2420);">
+                                🍕
+                            </div>
+                            <div class="item-info">
+                                <div class="item-name">Domino's Pizza</div>
+                                <div class="item-meta">22 orders</div>
+                            </div>
+                        </div>
+                        <div class="item-right">
+                            <div class="item-amount">₹6,340</div>
+                            <div class="item-percentage">14.0%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="list-card">
+                <div class="list-title">Recent Orders</div>
+                <div class="list-items">
+                    <div class="list-item">
+                        <div class="item-left">
+                            <div class="item-icon" style="background: linear-gradient(135deg, #667eea20, #764ba220);">
+                                🍗
+                            </div>
+                            <div class="item-info">
+                                <div class="item-name">KFC - Bucket Meal</div>
+                                <div class="item-meta">Today, 7:30 PM</div>
+                            </div>
+                        </div>
+                        <div class="item-right">
+                            <div class="item-amount">₹599</div>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <div class="item-left">
+                            <div class="item-icon" style="background: linear-gradient(135deg, #ec489920, #f472b620);">
+                                🍜
+                            </div>
+                            <div class="item-info">
+                                <div class="item-name">Noodle House</div>
+                                <div class="item-meta">Yesterday, 8:15 PM</div>
+                            </div>
+                        </div>
+                        <div class="item-right">
+                            <div class="item-amount">₹320</div>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <div class="item-left">
+                            <div class="item-icon" style="background: linear-gradient(135deg, #10b98120, #34d39920);">
+                                🍔
+                            </div>
+                            <div class="item-info">
+                                <div class="item-name">McDonald's</div>
+                                <div class="item-meta">2 days ago, 1:45 PM</div>
+                            </div>
+                        </div>
+                        <div class="item-right">
+                            <div class="item-amount">₹285</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
